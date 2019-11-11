@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ImportGroup>
-    <Import Project="src/domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
-    <Import Project="src/dotnet-exts/export.targets" Condition=" '$(ImportedDotnetExts)' == '' " />
-    <Import Project="src/fparsec-exts/export.targets" Condition=" '$(ImportedFParsecExts)' == '' " />
+    <Import Project="$(MSBuildThisFileDirectory)/src/domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
+    <Import Project="$(MSBuildThisFileDirectory)/src/dotnet-exts/export.targets" Condition=" '$(ImportedDotnetExts)' == '' " />
+    <Import Project="$(MSBuildThisFileDirectory)/src/fparsec-exts/export.targets" Condition=" '$(ImportedFParsecExts)' == '' " />
   </ImportGroup>
 
   <ItemGroup>
-    <Compile Include="tests/entry.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/tests/entry.fs" />
   </ItemGroup>
 
   <Import Project=".paket\Paket.Restore.targets" />

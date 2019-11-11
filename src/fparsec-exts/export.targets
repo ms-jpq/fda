@@ -2,12 +2,12 @@
 <Project>
 
   <ImportGroup>
-    <Import Project="../domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
+    <Import Project="$(MSBuildThisFileDirectory)/../domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
   </ImportGroup>
 
 
   <ItemGroup>
-    <Compile Include="src/fparsec-exts/extensions.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/extensions.fs" />
   </ItemGroup>
 
   <PropertyGroup>

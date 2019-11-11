@@ -2,12 +2,12 @@
 <Project>
 
   <ItemGroup>
-    <Compile Include="src/domain-agnostic/prelude.fs" />
-    <Compile Include="src/domain-agnostic/extensions.fs" />
-    <Compile Include="src/domain-agnostic/builders.fs" />
-    <Compile Include="src/domain-agnostic/parse.fs" />
-    <Compile Include="src/domain-agnostic/timers.fs" />
-    <Compile Include="src/domain-agnostic/global-var.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/prelude.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/extensions.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/builders.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/parse.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/timers.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/global-var.fs" />
   </ItemGroup>
 
   <PropertyGroup>

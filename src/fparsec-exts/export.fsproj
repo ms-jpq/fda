@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../domain-agnostic/export.fsproj" />
-  <ItemGroup>
-    <Compile Include="./extensions.fs" />
-  </ItemGroup>
-</Project>

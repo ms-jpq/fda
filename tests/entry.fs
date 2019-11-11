@@ -4,7 +4,6 @@ open DomainAgnostic
 
 module main =
 
-
     [<EntryPoint>]
     let main argv =
         echo "test"

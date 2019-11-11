@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+
+  <ImportGroup>
+    <Import Project="../domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
+  </ImportGroup>
+
+
+  <ItemGroup>
+    <Compile Include="src/fparsec-exts/extensions.fs" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ImportedFParsecExts>true</ImportedFParsecExts>
+  </PropertyGroup>
+
+</Project>

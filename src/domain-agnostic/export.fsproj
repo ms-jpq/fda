@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <Compile Include="./prelude.fs" />
+    <Compile Include="./extensions.fs" />
+    <Compile Include="./builders.fs" />
+    <Compile Include="./parse.fs" />
+    <Compile Include="./timers.fs" />
+    <Compile Include="./global-var.fs" />
+  </ItemGroup>
+</Project>

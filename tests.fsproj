@@ -7,6 +7,7 @@
 
   <ImportGroup>
     <Import Project="src/domain-agnostic/export.targets" Condition=" '$(ImportedDomainAgnostic)' == '' " />
+    <Import Project="src/dotnet-exts/export.targets" Condition=" '$(ImportedDotnetExts)' == '' " />
     <Import Project="src/fparsec-exts/export.targets" Condition=" '$(ImportedFParsecExts)' == '' " />
   </ImportGroup>
 

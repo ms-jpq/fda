@@ -1,6 +1,8 @@
 namespace Tests
 
 open DomainAgnostic
+open FParsecExtensions
+open DotNetExtensions
 
 module main =
 

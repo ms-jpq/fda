@@ -144,6 +144,10 @@ module ResultMonad =
             | Ok res -> res
             | Error err -> replace err
 
+        static member ForceUnwrap result =
+            match result with
+            | Ok res -> res
+            | Error err -> raise err
 
 [<RequireQualifiedAccess>]
 module Seq =

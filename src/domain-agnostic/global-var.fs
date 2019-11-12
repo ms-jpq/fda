@@ -15,13 +15,18 @@ module Globals =
                 return next
             }
 
-        let agent = Agent.StartSupervised Agent.DefaultErrHandle runloop init
+        let agent =
+            let a = Agent.Supervised Agent.DefaultErrHandle runloop init Async.DefaultCancellationToken
+            a.Start()
+            a
 
         interface IDisposable with
             member __.Dispose() = agent |> IDisposable.DisposeOf
 
         member __.Get() = agent.PostAndAsyncReply(fun ch -> (id, ch))
 
-        member __.Put state = agent.PostAndAsyncReply(fun ch -> (constantly state, ch))
+        member __.Put state =
+            agent.PostAndAsyncReply(fun ch -> (constantly state, ch))
+            |> Async.Ignore
 
         member __.Update callback = agent.PostAndAsyncReply(fun ch -> (callback, ch))

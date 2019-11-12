@@ -11,7 +11,8 @@ module Timers =
         let tick() =
             async {
                 let elapsed = timer.Elapsed
-                do! max 0 (period - elapsed).Milliseconds |> Async.Sleep
+                let span = int (period - elapsed).TotalMilliseconds
+                do! max 0 span |> Async.Sleep
                 timer.Restart()
                 return elapsed
             }

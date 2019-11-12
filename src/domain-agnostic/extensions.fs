@@ -203,3 +203,8 @@ module List =
         match List.length lst with
         | 0 -> []
         | _ -> List.tail lst
+
+[<RequireQualifiedAccess>]
+module Async =
+
+    let SleepFor(span: TimeSpan) = int span.TotalMilliseconds |> Async.Sleep

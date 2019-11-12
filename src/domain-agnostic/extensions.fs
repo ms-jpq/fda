@@ -32,7 +32,7 @@ module Agents =
 
         static member DefaultErrHandle _ prev = async.Return prev
 
-        static member StartSupervised errHandle processor init =
+        static member Supervised errHandle processor init token =
             let rec watch state inbox =
                 async {
                     try
@@ -44,7 +44,8 @@ module Agents =
                             return! watch next inbox
                         with _ -> return! watch state inbox
                 }
-            watch init |> MailboxProcessor.Start
+            new MailboxProcessor<_>(watch init, token)
+
 
 [<AutoOpen>]
 module OptionalMonad =

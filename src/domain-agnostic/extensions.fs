@@ -82,73 +82,6 @@ module OptionalMonad =
             | Some v -> v
             | None -> failwith err
 
-[<AutoOpen>]
-module AsyncMonad =
-
-    type Async with
-        static member Return v = async.Return v
-
-        static member New func a = async { return func a }
-
-        static member Map func res = async {
-                                         let! result = res
-                                         return func result }
-
-        static member Bind func res = async {
-                                          let! result = res
-                                          return! func result }
-
-        static member BindTask (func: 'a -> Task<'b>) res =
-            async {
-                let! result = res
-                return! result
-                        |> func
-                        |> Async.AwaitTask
-            }
-
-        static member StartAsPlainTask compute = compute |> Async.StartAsTask :> Task
-
-        static member IgnoreTask task =
-            task :> Task
-            |> Async.AwaitTask
-            |> Async.Ignore
-
-        static member ParallelSeq a = async {
-                                          let! res = a |> Async.Parallel
-                                          return Seq.ofArray res }
-
-
-[<AutoOpen>]
-module ResultMonad =
-
-    type Result<'T, 'E> with
-
-        static member New func a =
-            try
-                func a |> Ok
-            with e -> Error e
-
-        static member ExnError msg = Exception(message = msg) |> Error
-
-        static member FromOptional err o =
-            match o with
-            | Some v -> Ok v
-            | None -> Error err
-
-        static member Recover replacement result =
-            match result with
-            | Ok res -> res
-            | Error _ -> replacement
-
-        static member RecoverWith replace result =
-            match result with
-            | Ok res -> res
-            | Error err -> replace err
-
-        static member ForceUnwrap result =
-            match result with
-            | Ok res -> res
-            | Error err -> raise err
 
 [<RequireQualifiedAccess>]
 module Seq =
@@ -186,10 +119,6 @@ module Seq =
                     yield e1, e2
         }
 
-    let AsyncMap func sequence =
-        sequence
-        |> Seq.map (func |> Async.New)
-        |> Async.ParallelSeq
 
 [<RequireQualifiedAccess>]
 module List =
@@ -208,7 +137,84 @@ module List =
         | 0 -> []
         | _ -> List.tail lst
 
+
 [<RequireQualifiedAccess>]
 module Async =
 
     let SleepFor(span: TimeSpan) = int span.TotalMilliseconds |> Async.Sleep
+
+
+[<AutoOpen>]
+module ResultMonad =
+
+    type Result<'T, 'E> with
+
+        static member New func a =
+            try
+                func a |> Ok
+            with e -> Error e
+
+        static member ExnError msg = Exception(message = msg) |> Error
+
+        static member FromOptional err o =
+            match o with
+            | Some v -> Ok v
+            | None -> Error err
+
+        static member Recover replacement result =
+            match result with
+            | Ok res -> res
+            | Error _ -> replacement
+
+        static member RecoverWith replace result =
+            match result with
+            | Ok res -> res
+            | Error err -> replace err
+
+        static member ForceUnwrap result =
+            match result with
+            | Ok res -> res
+            | Error err -> raise err
+
+        static member Discriminate s =
+            let m (g, b) c =
+                match c with
+                | Ok v -> (Seq.Appending v g, b)
+                | Error e -> (g, Seq.Appending e b)
+            Seq.fold m (Seq.empty, Seq.empty) s
+
+
+[<AutoOpen>]
+module AsyncMonad =
+
+    type Async with
+        static member Return v = async.Return v
+
+        static member New func a = async { return func a }
+
+        static member Map func res = async {
+                                         let! result = res
+                                         return func result }
+
+        static member Bind func res = async {
+                                          let! result = res
+                                          return! func result }
+
+        static member BindTask (func: 'a -> Task<'b>) res =
+            async {
+                let! result = res
+                return! result
+                        |> func
+                        |> Async.AwaitTask
+            }
+
+        static member StartAsPlainTask compute = compute |> Async.StartAsTask :> Task
+
+        static member IgnoreTask task =
+            task :> Task
+            |> Async.AwaitTask
+            |> Async.Ignore
+
+        static member ParallelSeq a = async {
+                                          let! res = a |> Async.Parallel
+                                          return Seq.ofArray res }

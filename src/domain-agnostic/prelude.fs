@@ -24,6 +24,8 @@ module Prelude =
         echo thing
         thing
 
+    let ToString thing = thing.ToString()
+
     let flip f x y = f y x
 
     let constantly x _ = x

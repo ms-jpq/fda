@@ -196,6 +196,8 @@ module List =
 
     let Bind: ('a -> 'b list) -> 'a list -> 'b list = List.collect
 
+    let Prepending elem lst = elem :: lst
+
     let FromOptional opt =
         match opt with
         | Some v -> List.singleton v

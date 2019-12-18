@@ -25,6 +25,11 @@ module Parse =
             float str |> Some
         with _ -> None
 
+    let Bool(str: string) =
+        try
+            Boolean.Parse str |> Some
+        with _ -> None
+
     let GUID(str: string) =
         try
             Guid.Parse(str.Replace("-", "")) |> Some

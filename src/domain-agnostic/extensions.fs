@@ -88,6 +88,14 @@ module Seq =
 
     let Bind: ('a -> 'b seq) -> 'a seq -> 'b seq = Seq.collect
 
+    let SkipFront n s =
+        let l = Seq.length s
+        Seq.skip (min l n) s
+
+    let SkipBack n s =
+        let l = Seq.length s
+        Seq.truncate (l - n) s
+
     let FromOptional opt =
         match opt with
         | Some v -> Seq.singleton v
@@ -96,8 +104,7 @@ module Seq =
     let Appending elem sequence = Seq.singleton elem |> Seq.append sequence
 
     let NilIfEmpty(s: 'a seq) =
-        if Seq.isEmpty s then None
-        else Some s
+        if Seq.isEmpty s then None else Some s
 
     let Partition predicate source =
         let map =

@@ -20,13 +20,11 @@ module OptionBuilder =
                 m
             with e -> f e
 
-
         member __.TryFinally(m: 'a option, f) =
             try
                 m
             finally
                 f()
-
 
         member __.Using(m: #IDisposable, f) =
             try

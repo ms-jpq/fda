@@ -1,11 +1,8 @@
 namespace DomainAgnostic
 
-open FSharp.Reflection
-open FSharp.Quotations
-open FSharp.Quotations.DerivedPatterns
-open FSharp.Quotations.Patterns
 open System
 open System.Collections
+
 
 [<AutoOpen>]
 module Prelude =
@@ -32,18 +29,7 @@ module Prelude =
 
     let tuple x y = (x, y)
 
-    let asMap (record: 'T) =
-        [ for p in FSharpType.GetRecordFields(typeof<'T>) -> p.Name, p.GetValue(record) ]
-        |> Map.ofSeq
-
     let (++) = Seq.append
-
-    let isCase (c: Expr<_ -> 'T>) =
-        match c with
-        | Lambdas(_, NewUnionCase(uci, _)) ->
-            let tagReader = FSharpValue.PreComputeUnionTagReader(uci.DeclaringType)
-            fun (v: 'T) -> (tagReader v) = uci.Tag
-        | _ -> failwith "Invalid expression"
 
     let ENV() =
         Environment.GetEnvironmentVariables()

@@ -5,6 +5,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)/extensions.fs" />
     <Compile Include="$(MSBuildThisFileDirectory)/builders.fs" />
     <Compile Include="$(MSBuildThisFileDirectory)/parse.fs" />
+    <Compile Include="$(MSBuildThisFileDirectory)/reflection.fs" />
     <Compile Include="$(MSBuildThisFileDirectory)/timers.fs" />
     <Compile Include="$(MSBuildThisFileDirectory)/global-var.fs" />
   </ItemGroup>

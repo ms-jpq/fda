@@ -38,6 +38,8 @@ module Prelude =
 
     let (++) = Seq.append
 
+    let (?) a b = Option.defaultValue b a
+
     let isCase (c: Expr<_ -> 'T>) =
         match c with
         | Lambdas(_, NewUnionCase(uci, _)) ->

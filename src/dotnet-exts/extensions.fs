@@ -9,7 +9,7 @@ open System.Collections.Generic
 
 module Exts =
 
-    let metadata (req: HttpRequest) =
+    let Metadata(req: HttpRequest) =
         let headers =
             req.Headers
             |> Seq.cast<KeyValuePair<string, StringValues>>
@@ -21,3 +21,11 @@ module Exts =
             |> Map.OfKVP
 
         headers, cookies
+
+
+    let AddHeaders headers (req: HttpRequest) =
+        headers
+        |> Seq.map (fun (k, v: string) -> k, StringValues(v))
+        |> Map.ofSeq
+        |> Map.ToKVP
+        |> Seq.iter req.Headers.Add

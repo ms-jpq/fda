@@ -23,9 +23,9 @@ module Exts =
         headers, cookies
 
 
-    let AddHeaders headers (req: HttpRequest) =
+    let AddHeaders headers (resp: HttpResponse) =
         headers
         |> Seq.map (fun (k, v: string) -> k, StringValues(v))
         |> Map.ofSeq
         |> Map.ToKVP
-        |> Seq.iter req.Headers.Add
+        |> Seq.iter resp.Headers.Add

@@ -1,6 +1,7 @@
 namespace DotNetExtensions
 
 
+open DomainAgnostic
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Primitives
 open System.Collections.Generic
@@ -12,13 +13,11 @@ module Exts =
         let headers =
             req.Headers
             |> Seq.cast<KeyValuePair<string, StringValues>>
-            |> Seq.map (fun x -> x.Key, x.Value)
-            |> Map.ofSeq
+            |> Map.OfKVP
 
         let cookies =
             req.Cookies
             |> Seq.cast<KeyValuePair<string, string>>
-            |> Seq.map (fun x -> x.Key, x.Value)
-            |> Map.ofSeq
+            |> Map.OfKVP
 
         headers, cookies

@@ -1,6 +1,7 @@
 namespace DomainAgnostic
 
 open System
+open System.Collections.Generic
 open System.Threading.Tasks
 
 
@@ -143,6 +144,20 @@ module List =
         match List.length lst with
         | 0 -> []
         | _ -> List.tail lst
+
+
+[<RequireQualifiedAccess>]
+module Map =
+
+    let ToKVP m =
+        m
+        |> Map.toSeq
+        |> Seq.map (fun (k, v) -> KeyValuePair(k, v))
+
+    let OfKVP(kvp: KeyValuePair<'a, 'b> seq) =
+        kvp
+        |> Seq.map (fun kvp -> (kvp.Key, kvp.Value))
+        |> Map.ofSeq
 
 
 [<RequireQualifiedAccess>]

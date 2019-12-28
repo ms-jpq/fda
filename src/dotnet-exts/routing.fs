@@ -11,10 +11,10 @@ open System.Collections.Generic
 
 module Routing =
 
-    type HttpHeaderAttribute(name: string, ?value: string) =
+    type HttpHeaderAttribute(name: string, value: string) =
         inherit Attribute()
 
-        new(name: string) = HttpHeaderAttribute(name)
+        new(name: string) = HttpHeaderAttribute(name, null)
 
 
         interface IActionConstraint with
@@ -30,5 +30,5 @@ module Routing =
 
                 match (find name, value) with
                 | None, _ -> false
-                | Some v1, Some v2 -> ToString v1 = v2
-                | Some _, _ -> true
+                | Some _, null -> true
+                | Some v1, v2 -> ToString v1 = v2

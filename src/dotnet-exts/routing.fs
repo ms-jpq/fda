@@ -25,10 +25,11 @@ module Routing =
                 let find =
                     context.RouteContext.HttpContext.Request.Headers
                     |> Seq.cast<KeyValuePair<string, StringValues>>
-                    |> Map.OfKVP
+                    |> Seq.map (fun x -> x.Key.ToLower(), x.Value.ToString())
+                    |> Map.ofSeq
                     |> flip Map.tryFind
 
-                match (find name, value) with
+                match (name.ToLower() |> find, value) with
                 | None, _ -> false
                 | Some _, null -> true
-                | Some v1, v2 -> ToString v1 = v2
+                | Some v1, v2 -> v1 = v2

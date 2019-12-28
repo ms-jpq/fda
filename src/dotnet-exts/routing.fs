@@ -11,8 +11,12 @@ open System.Collections.Generic
 
 module Routing =
 
-    type HttpHeaderAttribute(name: string, value: string option) =
+    type HttpHeaderAttribute(name: string, ?value: string) =
         inherit Attribute()
+
+        new(name: string) = HttpHeaderAttribute(name)
+
+
         interface IActionConstraint with
 
             member __.Order = 0

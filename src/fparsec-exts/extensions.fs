@@ -10,7 +10,7 @@ module Extensions =
 
     type Result<'T, 'E> with
 
-        static member FromParseResult result =
+        static member OfParseResult result =
             match result with
             | Success(s, _, _) -> s |> Result.Ok
             | Failure(f, _, _) -> f |> Result.ExnError

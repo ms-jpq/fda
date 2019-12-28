@@ -63,17 +63,17 @@ module OptionalMonad =
             | Some value -> value
             | None -> func()
 
-        static member FromOptional o =
+        static member OfOptional o =
             match o with
             | ValueSome value -> Some value
             | ValueNone -> None
 
-        static member FromResult result =
+        static member OfResult result =
             match result with
             | Ok value -> Some value
             | Error _ -> None
 
-        static member FromNullable x =
+        static member OfNullable x =
             match box x with
             | null -> None
             | _ -> Some x
@@ -97,7 +97,7 @@ module Seq =
         let l = Seq.length s
         Seq.truncate (l - n) s
 
-    let FromOptional opt =
+    let OfOptional opt =
         match opt with
         | Some v -> Seq.singleton v
         | None -> Seq.empty
@@ -135,7 +135,7 @@ module List =
 
     let Prepending elem lst = elem :: lst
 
-    let FromOptional opt =
+    let OfOptional opt =
         match opt with
         | Some v -> List.singleton v
         | None -> List.empty
@@ -178,7 +178,7 @@ module ResultMonad =
 
         static member ExnError msg = Exception(message = msg) |> Error
 
-        static member FromOptional err o =
+        static member OfOptional err o =
             match o with
             | Some v -> Ok v
             | None -> Error err

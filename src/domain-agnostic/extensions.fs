@@ -149,7 +149,7 @@ module List =
 [<RequireQualifiedAccess>]
 module Map =
 
-    let MapKeys m f =
+    let MapKeys f m =
         m
         |> Map.toSeq
         |> Seq.map (fun (k, v) -> f k, v)

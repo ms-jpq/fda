@@ -11,6 +11,7 @@ open System.Collections.Generic
 
 module Routing =
 
+    [<AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = true)>]
     type HttpHeaderAttribute(name: string, value: string) =
         inherit Attribute()
 

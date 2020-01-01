@@ -3,7 +3,7 @@ namespace DomainAgnostic
 open System
 open System.IO
 
-
+[<AutoOpen>]
 module IO =
 
     let slurp path =

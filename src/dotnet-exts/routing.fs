@@ -12,6 +12,19 @@ open System.Collections.Generic
 module Routing =
 
     [<AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = true)>]
+    type PortAttribute(value: int) =
+        inherit Attribute()
+
+        interface IActionConstraint with
+
+            member __.Order = 0
+
+            member __.Accept context =
+                let port = context.RouteContext.HttpContext.Connection.LocalPort
+                port = value
+
+
+    [<AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = true)>]
     type HttpHeaderAttribute(name: string, value: string) =
         inherit Attribute()
 
@@ -20,7 +33,7 @@ module Routing =
 
         interface IActionConstraint with
 
-            member __.Order = 0
+            member __.Order = 1
 
             member __.Accept context =
                 let find =

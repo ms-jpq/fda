@@ -10,7 +10,7 @@ module Exts =
 
     let Headers(req: HttpRequest) = req.Headers |> Map.OfKVP
 
-    let Cookies(req: HttpRequest) = req.Headers |> Map.OfKVP
+    let Cookies(req: HttpRequest) = req.Cookies |> Map.OfKVP
 
     let Query(req: HttpRequest) = req.Query |> Map.OfKVP
 

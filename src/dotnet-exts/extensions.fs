@@ -4,23 +4,20 @@ namespace DotNetExtensions
 open DomainAgnostic
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Primitives
-open System.Collections.Generic
 
 
 module Exts =
 
-    let Metadata(req: HttpRequest) =
-        let headers =
-            req.Headers
-            |> Seq.cast<KeyValuePair<string, StringValues>>
-            |> Map.OfKVP
+    let Headers(req: HttpRequest) = req.Headers |> Map.OfKVP
 
-        let cookies =
-            req.Cookies
-            |> Seq.cast<KeyValuePair<string, string>>
-            |> Map.OfKVP
+    let Cookies(req: HttpRequest) = req.Headers |> Map.OfKVP
 
-        headers, cookies
+    let Query(req: HttpRequest) = req.Query |> Map.OfKVP
+
+    let Form(req: HttpRequest) =
+        req.ReadFormAsync()
+        |> Async.AwaitTask
+        |> Async.Map Map.OfKVP
 
 
     let AddHeaders headers (resp: HttpResponse) =

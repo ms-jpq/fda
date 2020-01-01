@@ -158,6 +158,12 @@ module List =
 [<RequireQualifiedAccess>]
 module Map =
 
+    let MapKV f m =
+        m
+        |> Map.toSeq
+        |> Seq.map (fun (k, v) -> f k v)
+        |> Map.ofSeq
+
     let MapKeys f m =
         m
         |> Map.toSeq

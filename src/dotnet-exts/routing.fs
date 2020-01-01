@@ -38,9 +38,8 @@ module Routing =
             member __.Accept context =
                 let find =
                     context.RouteContext.HttpContext.Request.Headers
-                    |> Seq.cast<KeyValuePair<string, StringValues>>
-                    |> Seq.map (fun x -> x.Key.ToLower(), x.Value.ToString())
-                    |> Map.ofSeq
+                    |> Map.OfKVP
+                    |> Map.MapKV(fun k v -> k.ToLower(), v.ToString())
                     |> flip Map.tryFind
 
                 match (name.ToLower() |> find, value) with

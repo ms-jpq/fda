@@ -107,12 +107,14 @@ module Seq =
     let NilIfEmpty(s: 'a seq) =
         if Seq.isEmpty s then None else Some s
 
-    let Count c s =
+    let Count predicate s =
         let count acc curr =
-            match c curr with
+            match predicate curr with
             | true -> acc + 1
             | false -> acc
         s |> Seq.fold count 0
+
+    let Contains predicate s = Count predicate s > 0
 
     let Partition predicate source =
         let map =

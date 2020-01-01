@@ -11,7 +11,7 @@ open System.Collections.Generic
 
 module Routing =
 
-    [<AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = true)>]
+    [<AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)>]
     type PortAttribute(value: int) =
         inherit Attribute()
 

@@ -33,7 +33,7 @@ module Routing =
 
         interface IActionConstraint with
 
-            member __.Order = 1
+            member __.Order = 0
 
             member __.Accept context =
                 let find =

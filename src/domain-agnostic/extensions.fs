@@ -165,10 +165,12 @@ module Map =
         |> Map.ofSeq
 
     let MapKeys f m =
-        m
-        |> Map.toSeq
-        |> Seq.map (fun (k, v) -> f k, v)
-        |> Map.ofSeq
+        let ff k v = (f k, v)
+        MapKV ff m
+
+    let MapValues f m =
+        let ff k v = (k, f v)
+        MapKV ff m
 
     let ToKVP m =
         m

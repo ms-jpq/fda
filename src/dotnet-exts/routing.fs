@@ -4,9 +4,7 @@ namespace DotNetExtensions
 open DomainAgnostic
 open Exts
 open Microsoft.AspNetCore.Mvc.ActionConstraints
-open Microsoft.Extensions.Primitives
 open System
-open System.Collections.Generic
 
 
 module Routing =
@@ -39,10 +37,10 @@ module Routing =
                 let find =
                     context.RouteContext.HttpContext.Request.Headers
                     |> Map.OfKVP
-                    |> Map.MapKV(fun k v -> k.ToLower(), v.ToString())
+                    |> Map.MapValues string
                     |> flip Map.tryFind
 
-                match (name.ToLower() |> find, value) with
+                match (find name, value) with
                 | None, _ -> false
                 | Some _, null -> true
                 | Some v1, v2 -> v1 = v2

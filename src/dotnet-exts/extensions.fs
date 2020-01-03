@@ -8,6 +8,8 @@ open Microsoft.Extensions.Primitives
 
 module Exts =
 
+    let Ctx(ctx: HttpContext) = ctx.Request, ctx.Response, ctx.Connection
+
     let Headers(req: HttpRequest) = req.Headers |> Map.OfKVP
 
     let Cookies(req: HttpRequest) = req.Cookies |> Map.OfKVP

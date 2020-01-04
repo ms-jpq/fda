@@ -34,18 +34,20 @@ module Agents =
         static member DefaultErrHandle _ prev = async.Return prev
 
         static member Supervised errHandle processor init token =
-            let rec watch state inbox =
+            let watch inbox =
                 async {
-                    try
-                        let! next = processor inbox state
-                        do! watch next inbox
-                    with e ->
+                    let mutable v = init
+                    while true do
                         try
-                            let! next = errHandle e state
-                            do! watch next inbox
-                        with _ -> do! watch state inbox
+                            let! next = processor inbox v
+                            v <- next
+                        with e ->
+                            try
+                                let! next = errHandle e v
+                                v <- next
+                            with _ -> ()
                 }
-            new MailboxProcessor<_>(watch init, token)
+            new MailboxProcessor<_>(watch, token)
 
 
 [<AutoOpen>]

@@ -38,12 +38,12 @@ module Agents =
                 async {
                     try
                         let! next = processor inbox state
-                        return! watch next inbox
+                        do! watch next inbox
                     with e ->
                         try
                             let! next = errHandle e state
-                            return! watch next inbox
-                        with _ -> return! watch state inbox
+                            do! watch next inbox
+                        with _ -> do! watch state inbox
                 }
             new MailboxProcessor<_>(watch init, token)
 

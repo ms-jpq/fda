@@ -7,17 +7,17 @@ module Globals =
 
     type GlobalVar<'T>(init: 'T) =
 
-        let runloop (agent: Agent<('T -> 'T) * AsyncReplyChannel<'T>>) state =
+        let runloop (agent: Agent<('T -> 'T) * AsyncReplyChannel<'T>>) =
             async {
-                let! update, ch = Agent.Receive agent
-                let next = update state
-                ch.Reply next
-                return next
+                let mutable next = init
+                while true do
+                    let! update, ch = Agent.Receive agent
+                    next <- update next
+                    ch.Reply next
             }
 
         let agent =
-            let a = Agent.Supervised Agent.DefaultErrHandle runloop init Async.DefaultCancellationToken
-            a.Start()
+            let a = Agent.Start runloop
             a
 
         interface IDisposable with
